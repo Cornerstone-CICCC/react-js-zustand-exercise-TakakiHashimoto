@@ -1,31 +1,73 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/PI4lfYcP)
-# React JS - Zustand Exercise
+# React + TypeScript + Vite
 
-**Goal:** Implement global state management with React and Zustand.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Instructions 📖
+Currently, two official plugins are available:
 
-1. Create a React project called by running `npm create vite@latest zustand-exercise`.
-2. Create a `user.store.ts` inside your `stores` directory that has these states:
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-    - `users` (array of User)
-    - `addUser` (function)
-    - `deleteUser` (function)
-  
-   Here are the type `User` object properties:
+## React Compiler
 
-    - `id` (uuid string)
-    - `firstname` (string)
-    - `lastname` (string)
-    - `age` (number)
-    - `hobbies` (string array)
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-4. In your `User.tsx` component, output all the list of users in a list.
-5. In each list, create a **Delete** button which triggers the `deleteUser` function from the store.
-6. Create a form below the list with three input fields (one for firstname, one for lastname, and one for age).
-7. Create a list of checkboxes for hobbies.
-8. Clicking the **Add User** button will add the new user to the users array.
-9. *BONUS:* Try wrapping your store using the `persist` function of Zustand so that the data gets stored in local storage.
-10. Commit and push your changes.
+## Expanding the ESLint configuration
 
-Good luck! 🎉🎉🎉
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
+
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
+
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
+
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
